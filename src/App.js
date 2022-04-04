@@ -10,34 +10,13 @@ import {
 } from "react-router-dom";
 
 class App extends React.Component {
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      user: null,
-    }
-  }
-
-  loginHandler = (user) => {
-    this.setState({
-      user,
-    })
-  }
-
-  logoutHandler = () => {
-    this.setState({
-      user: null,
-    })
-  }
-
   render() {
     return (
       <>
         <Router>
-          <Header user={this.state.user} onLogout={this.logoutHandler} />
+          <Header />
           <Switch>
             <Route exact path="/">
-              {/* PLACEHOLDER: if the user is logged in, render the `BestBooks` component, if they are not, render the `Login` component */}
               <BestBooks />
             </Route>
             {/* PLACEHOLDER: add a route with a path of '/about' that renders the `About` component */}
