@@ -1,0 +1,10 @@
+#profileCard {
+    display: flex;
+    justify-content: center;
+    margin: 45px 25px;
+    height: fit-content;
+}
+
+.img-me {
+    height: auto;
+}
