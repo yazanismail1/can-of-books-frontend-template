@@ -1,7 +1,7 @@
 # Project Name
 
 **Author**: Yazan Alfarra, Bashar Nobeh
-**Version**: 1.0.0
+**Version**: 2.0.0
 
 ## Overview
 
@@ -21,19 +21,21 @@ A high end web app that enables you to see the most recommended books to read.
 
 ## Change Log
 
+05-09-2022 11:42pm - Application now has a fully-functional express server and mongo database with route to fetch and post and delete the data.
+
 04-09-2022 7:54pm - Application now has a fully-functional express server and mongo database with route to fetch the data.
  
 ## Estimates
 
-Name of feature: server and mongo DB
+Name of feature: server and mongo DB with POST and DELETE requests
 
 Estimate of time needed to complete: 3 hrs
 
-Start time: 5:15pm
+Start time: 4:00pm
 
-Finish time: 7:56pm
+Finish time: 11:00pm
 
-Actual time needed to complete: 3 hrs
+Actual time needed to complete: 7 hrs
 
 ## Credit and Collaborations
 
