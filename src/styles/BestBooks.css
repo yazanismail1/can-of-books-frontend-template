@@ -19,3 +19,8 @@ img {
     height: 526px;
 
 }
+
+#btns {
+    display: flex;
+    gap: 5px;
+}

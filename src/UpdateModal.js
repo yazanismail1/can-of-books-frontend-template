@@ -1,25 +1,26 @@
 import React from "react";
-import "./styles/FormModal.css";
+import "./styles/UpdateModal.css";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 
-class FormModal extends React.Component {
+class UpdateModal extends React.Component {
 
   render() {
     return (
-        <Modal show={this.props.show} onHide={this.props.handleClose}>
+        <Modal show={this.props.show} onHide={this.props.handleCloseUpdate}>
         <Modal.Header closeButton>
-          <Modal.Title>Add A New Book To Favorites</Modal.Title>
+          <Modal.Title>Update Your Selection!</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form onSubmit={this.props.addBook}>
+          <Form onSubmit={this.props.updateBook}>
             <Form.Group className="mb-3">
               <Form.Label>Book Title</Form.Label>
               <Form.Control
                 type="text"
                 name="title"
                 placeholder="Enter a book name"
+                defaultValue={this.props.currentBooks.title}
               />
             </Form.Group>
 
@@ -29,11 +30,12 @@ class FormModal extends React.Component {
                 type="text"
                 name="description"
                 placeholder="Enter a description"
+                defaultValue={this.props.currentBooks.description}
               />
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Label>Status</Form.Label>
-              <Form.Select id="status">
+              <Form.Select id="status" defaultValue={this.props.currentBooks.status}>
               <option>Choose a Status</option>
                 <option value="Life Changing">Life Changing</option>
                 <option value="Favorite Five">Favorite Five</option>
@@ -41,12 +43,12 @@ class FormModal extends React.Component {
               </Form.Select>
             </Form.Group>
             <Button variant="primary" type="submit">
-              Add Book Now!
+              Update Book Now!
             </Button>
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="secondary" onClick={this.props.handleClose}>
+          <Button variant="secondary" onClick={this.props.handleCloseUpdate}>
             Close
           </Button>
         </Modal.Footer>
@@ -55,4 +57,4 @@ class FormModal extends React.Component {
   }
 }
 
-export default FormModal;
+export default UpdateModal;
