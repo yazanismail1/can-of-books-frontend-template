@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import "./styles/BestBooks.css";
 import FormModal from "./FormModal";
+import UpdateModal from "./UpdateModal";
 // import Modal from "react-bootstrap/Modal";
 // import Form from "react-bootstrap/Form";
 import Carousel from "react-bootstrap/Carousel";
@@ -12,8 +13,10 @@ class BestBooks extends React.Component {
     super(props);
     this.state = {
       show: false,
+      showFlag: false,
       status: "",
       books: [],
+      currentBooks : {},
     };
   }
 
@@ -43,11 +46,23 @@ class BestBooks extends React.Component {
     });
   };
 
-  handleOnChange = (event) => {
+  handleShowUpdate = (item) => {
     this.setState({
-      status: event.target.value,
+      showFlag: true,
+      currentBooks : item,
     });
   };
+
+  handleCloseUpdate = () => {
+    this.setState({
+      showFlag: false,
+    });
+  };
+  // handleOnChange = (event) => {
+  //   this.setState({
+  //     status: event.target.value,
+  //   });
+  // };
 
   addBook = (event) => {
     event.preventDefault();
@@ -55,7 +70,8 @@ class BestBooks extends React.Component {
     const obj = {
       title: event.target.title.value,
       description: event.target.description.value,
-      status: this.state.status,
+      // status: this.state.status,
+      status : event.target.status.value
     };
 
     console.log(obj);
@@ -85,10 +101,34 @@ class BestBooks extends React.Component {
       .catch((err) => {
         console.log(err);
       });
-  };
+
+      
+    };
+    updateBook = (event) =>{
+      event.preventDefault();
+      let obj = {
+        title: event.target.title.value,
+        description: event.target.description.value,
+        status : event.target.status.value
+      }
+      console.log(obj)
+      const id = this.state.currentBooks._id;
+      axios
+      .put(`https://book-shelf-data-base.herokuapp.com/books/${id}`, obj)
+      .then(result=>{
+        this.setState({
+          books : result.data
+        })
+      })
+      .catch(err=>{
+        console.log(err);
+      })
+      this.handleCloseUpdate();
+    }
 
   render() {
     return (
+      <>
       <div>
         <div id="form">
           <>
@@ -104,7 +144,6 @@ class BestBooks extends React.Component {
               handleClose={this.handleClose}
               addBook={this.addBook}
               handleOnChange={this.handleOnChange}
-
             />
           </>
         </div>
@@ -124,23 +163,41 @@ class BestBooks extends React.Component {
                         <h3>{item.title}</h3>
                         <p>{item.description}</p>
                         <p>{item.status}</p>
+                        <div id="btns">
                         <Button
                           variant="light"
                           onClick={() => this.deleteBook(item._id)}
                         >
                           Delete This Book!
                         </Button>
+                        <Button
+                          variant="outline-light"
+                          onClick={() => this.handleShowUpdate(item)}
+                        >
+                          Update This Book!
+                        </Button>
+                        </div>
                       </Carousel.Caption>
                     </Carousel.Item>
                   );
                 })}
               </Carousel>
+                <UpdateModal
+                show={this.state.showFlag}
+                handleCloseUpdate={this.handleCloseUpdate}
+                handleShowUpdate={this.handleShowUpdate}
+                updateBook={this.updateBook}
+                currentBooks={this.state.currentBooks}
+              // handleOnChange={this.handleOnChange}
+               />
             </div>
           ) : (
             <h3>No Books Found :(</h3>
           )}
+
         </div>
       </div>
+               </>
     );
   }
 }
