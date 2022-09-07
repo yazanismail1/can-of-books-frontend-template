@@ -1,24 +1,41 @@
-import React from "react";
+// import React from "react";
 import Card from 'react-bootstrap/Card';
 import "./styles/Profile.css";
+import React, { Component } from 'react';
+import { withAuth0 } from '@auth0/auth0-react';
 
-class Profile extends React.Component {
-  
+class Profile extends Component {
   render() {
-    return (
-        <div id="profileCard">
-        <Card  style={{ width: '18rem' }}>
-      <Card.Img className="img-me" variant="top" src={require('./Me.png')} />
-      <Card.Body>
-        <Card.Title>Yazan Alfarra</Card.Title>
-        <Card.Text>
-          Upcoming and growing Software with proven experience in HTML, CSS, JavaScript and Python.
-        </Card.Text>
-      </Card.Body>
-    </Card>
-    </div>
-    )
-  }
+    const { user } = this.props.auth0;
+    console.log(user);
+    return(
+      <div id="profileCard">
+      <Card id="innerCard" style={{ width: '18rem' }}>
+    <Card.Img className="img-me" variant="top" src={user.picture} />
+    <Card.Body>
+      <Card.Title>{user.nickname}</Card.Title>
+      <Card.Text>{user.email}</Card.Text>
+    </Card.Body>
+  </Card>
+  </div>
+  ) 
+  // <div>Hello {user.name}</div>;
 }
+};
 
-export default Profile;
+export default withAuth0(Profile);
+
+
+
+
+
+// class Profile extends React.Component {
+  
+//   render() {
+//     return (
+        
+//     )
+//   }
+// }
+
+// export default Profile;

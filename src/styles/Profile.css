@@ -1,10 +1,14 @@
 #profileCard {
     display: flex;
     justify-content: center;
-    margin: 45px 25px;
-    height: fit-content;
+    align-items: center;
+    height: 100vh;
 }
 
 .img-me {
     height: auto;
+}
+
+#innerCard {
+    height: fit-content;
 }
