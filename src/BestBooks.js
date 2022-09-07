@@ -7,6 +7,8 @@ import UpdateModal from "./UpdateModal";
 // import Form from "react-bootstrap/Form";
 import Carousel from "react-bootstrap/Carousel";
 import Button from "react-bootstrap/Button";
+import { withAuth0 } from '@auth0/auth0-react';
+
 
 class BestBooks extends React.Component {
   constructor(props) {
@@ -17,13 +19,15 @@ class BestBooks extends React.Component {
       status: "",
       books: [],
       currentBooks : {},
+
     };
   }
 
   /* TODO: Make a GET request to your API to fetch all the books from the database  */
   componentDidMount = () => {
+    const { user } = this.props.auth0
     axios
-      .get("https://book-shelf-data-base.herokuapp.com/books")
+      .get(`https://book-shelf-data-base.herokuapp.com/books?name=${user.email}`)
       .then((result) => {
         this.setState({
           books: result.data,
@@ -66,12 +70,13 @@ class BestBooks extends React.Component {
 
   addBook = (event) => {
     event.preventDefault();
-
+    const { user } = this.props.auth0;
     const obj = {
       title: event.target.title.value,
       description: event.target.description.value,
       // status: this.state.status,
-      status : event.target.status.value
+      status : event.target.status.value,
+      name: user.email
     };
 
     console.log(obj);
@@ -90,8 +95,9 @@ class BestBooks extends React.Component {
   };
 
   deleteBook = (id) => {
+    const { user } = this.props.auth0;
     axios
-      .delete(`https://book-shelf-data-base.herokuapp.com/books/${id}`)
+      .delete(`https://book-shelf-data-base.herokuapp.com/books/${id}?name=${user.email}`)
       .then((result) => {
         this.setState({
           books: result.data,
@@ -106,10 +112,12 @@ class BestBooks extends React.Component {
     };
     updateBook = (event) =>{
       event.preventDefault();
+      const { user } = this.props.auth0;
       let obj = {
         title: event.target.title.value,
         description: event.target.description.value,
-        status : event.target.status.value
+        status : event.target.status.value,
+        name: user.email
       }
       console.log(obj)
       const id = this.state.currentBooks._id;
@@ -197,9 +205,9 @@ class BestBooks extends React.Component {
 
         </div>
       </div>
-               </>
+    </>        
     );
   }
 }
 
-export default BestBooks;
+export default withAuth0(BestBooks);
